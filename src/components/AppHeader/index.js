@@ -12,7 +12,7 @@ const AppHeader = () => {
             className="icon"
             icon={faRocket}
             size="2x"
-            color="#5C8BE7"
+            color="gray"
           />
           <span>Stock</span>
         </div>
@@ -22,7 +22,7 @@ const AppHeader = () => {
               className="icon"
               icon={faUserCircle}
               size="2x"
-              color="black"
+              color="gray"
             />
             <a href="/">John Doe </a>
           </div>
