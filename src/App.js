@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import "./assets/styles/main.scss";
+import React from 'react';
+import './assets/styles/main.scss';
+import Home from './pages/Home';
 
 function App() {
   return (
     <div className="App">
-      <p>Content goes here</p>
+      <Home />
     </div>
   );
 }
