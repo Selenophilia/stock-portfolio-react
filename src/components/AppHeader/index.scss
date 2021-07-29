@@ -1,0 +1,39 @@
+@import '../../assets/styles/variables';
+
+.page-header {
+  & {
+    width: 100%;
+    background: #ffff;
+    box-shadow: 0 2px 2px 0 $shadow;
+    padding: 0 40px 0;
+    height: 60px;
+    font-size: 18px;
+  }
+
+  & .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+
+    & .logo {
+      display: flex;
+      align-items: center;
+    }
+    & .icon {
+      margin-right: 10px;
+    }
+  }
+
+  & .nav-link {
+    display: flex;
+
+    & > .links {
+      margin-right: 5px;
+    }
+    & > .user {
+      align-items: center;
+      display: flex;
+    }
+  }
+}
