@@ -3,11 +3,11 @@
 .page-header {
   & {
     width: 100%;
-    background: #ffff;
+    background: #3b5998;
     box-shadow: 0 2px 2px 0 $shadow;
-    padding: 0 40px 0;
     height: 60px;
     font-size: 18px;
+    color: $white;
   }
 
   & .nav-bar {
@@ -15,10 +15,15 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-
+    margin-right: 40px;
+    margin-left: 40px;
     & .logo {
       display: flex;
       align-items: center;
+      & > .title {
+        font-weight: bolder;
+        font-size: 20px;
+      }
     }
     & .icon {
       margin-right: 10px;
