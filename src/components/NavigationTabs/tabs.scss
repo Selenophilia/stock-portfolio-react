@@ -19,7 +19,7 @@
     color: $dove-gray;
     transition: all ease 0.2s;
     border: none;
-    width: 350px;
+    width: 300px;
   }
 
   & .active {
@@ -30,6 +30,7 @@
   hr {
     margin-top: 5px;
     width: 90px;
+    background: $sun;
     border: 2px solid $sun;
   }
 
