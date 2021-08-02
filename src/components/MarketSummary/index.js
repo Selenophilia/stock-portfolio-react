@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MaterialTable from 'material-table';
 import './index.scss';
+import { getMarketSummary } from '../../api';
 
-const MarketSummary = ({ stocks }) => {
+const MarketSummary = ({}) => {
+  const [data, setData] = useState([]);
+
   const columns = [
     {
       title: 'Ticker Symbol',
@@ -43,11 +46,63 @@ const MarketSummary = ({ stocks }) => {
     }
   ];
 
+  const stocks = [
+    {
+      symbol: 'msft',
+      company: 'Microsoft',
+      change: 12,
+      open: '50.12',
+      previousclose: '150',
+      high: ' 100.2',
+      low: '150.2',
+      volume: '50.2',
+      current: '200'
+    },
+    {
+      symbol: 'aapl',
+      company: 'Apple Inc',
+      change: 24,
+      open: '100.23',
+      previousclose: '150',
+      high: '100.2',
+      low: '150.2',
+      volume: '50.2',
+      current: '200'
+    },
+    {
+      symbol: 'goog',
+      company: 'Google',
+      change: 18,
+      open: '200.21',
+      previousclose: '150',
+      high: '100.2',
+      low: '150.2',
+      volume: '50.2',
+      current: '200'
+    },
+    {
+      symbol: 'tsla',
+      company: 'Tesla',
+      change: 25,
+      open: '150.23',
+      previousclose: '150',
+      high: '100.2',
+      low: '150.2',
+      volume: '50.2',
+      current: '200'
+    }
+  ];
+
+  useEffect(() => {
+    //const results = await getMarketSummary();
+    setData(stocks);
+  }, []);
+
   return (
     <div className="stock-table">
       <MaterialTable
         title="Market Summary"
-        data={stocks}
+        data={data}
         columns={columns}
         options={{
           search: false,
