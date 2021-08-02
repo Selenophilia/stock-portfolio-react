@@ -1,0 +1,39 @@
+@import '../../assets/styles/variables';
+
+.tabs {
+  width: 70%;
+  text-align: center;
+  height: 145px;
+
+  & .btn-container {
+    margin-bottom: 20px;
+  }
+
+  & .tab-btns {
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: $dove-gray;
+    transition: all ease 0.2s;
+    border: none;
+    width: 350px;
+  }
+
+  & .active {
+    color: $sun;
+    font-weight: bold;
+  }
+
+  hr {
+    margin-top: 5px;
+    width: 90px;
+    border: 2px solid $sun;
+  }
+
+  .content {
+    text-align: center;
+  }
+}
