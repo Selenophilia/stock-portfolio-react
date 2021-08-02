@@ -108,7 +108,13 @@ const MarketSummary = ({}) => {
           search: false,
           paging: true,
           filtering: false,
-          exportButton: false
+          exportButton: false,
+          showTitle: false,
+          toolbar: false,
+          tableLayout: 'fixed',
+          headerStyle: {
+            whiteSpace: 'nowrap'
+          }
         }}
       />
     </div>
