@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AppHeader from '../../components/AppHeader';
 import AppPurchase from '../../components/AppPurchase';
-import MarketSummary from '../../components/MarketSummary';
-import { getMarketSummary } from '../../api';
+import TabControl from '../../components/NavigationTabs/TabControl';
+import Tab from '../../components/NavigationTabs/Tab';
+import './index.scss';
 
 const Home = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(async () => {
-    const results = await getMarketSummary();
-    setData(results);
-  }, []);
-
   return (
-    <>
+    <div className="stock-container">
       <AppHeader />
-      <AppPurchase />
-      <MarketSummary stocks={data} />
-    </>
+      <div className="stock-content">
+        <AppPurchase />
+        <div className="tabs">
+          <TabControl>
+            <Tab label="Portfolio" />
+            <Tab label="Transactions" />
+            <Tab label="Market Summary" />
+          </TabControl>
+        </div>
+      </div>
+    </div>
   );
 };
 

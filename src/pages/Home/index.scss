@@ -1,0 +1,10 @@
+.stock-container {
+  & > .stock-content {
+    display: flex;
+    flex-direction: row-reverse;
+    & > .tabs {
+      margin-right: 650px;
+      margin-top: 40px;
+    }
+  }
+}
