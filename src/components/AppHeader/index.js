@@ -14,7 +14,7 @@ const AppHeader = () => {
             size="2x"
             color="white"
           />
-          <span className="title">Meta stock</span>
+          <span className="title">Stock Portfolio</span>
         </div>
         <div className="nav-link">
           <div className="user">
