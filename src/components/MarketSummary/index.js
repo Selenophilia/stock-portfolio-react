@@ -101,7 +101,6 @@ const MarketSummary = ({}) => {
   return (
     <div className="stock-table">
       <MaterialTable
-        title="Market Summary"
         data={data}
         columns={columns}
         options={{

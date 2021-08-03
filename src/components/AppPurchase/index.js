@@ -2,8 +2,9 @@ import React from 'react';
 import './index.scss';
 
 const AppPurchase = () => {
-  const handleSubmit = (values) => {
-    console.log(values);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('event triggered');
   };
   return (
     <div className="container">

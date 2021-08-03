@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 import TabButtons from './TabButton';
 import MarketSummary from '../MarketSummary';
+import Portfolio from '../Portfolio';
 import './tabs.scss';
 const TabControl = ({ children }) => {
   const labels = [];
@@ -12,7 +13,7 @@ const TabControl = ({ children }) => {
   };
   const handleContent = (label) => {
     if (label === 'Portfolio') {
-      return <p> portfolio content goes here</p>;
+      return <Portfolio />;
     } else if (label === 'Transactions') {
       return <p> Transaction content goes here</p>;
     } else if (label === 'Market Summary') {
