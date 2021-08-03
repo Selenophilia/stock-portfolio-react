@@ -3,6 +3,7 @@ import Proptypes from 'prop-types';
 import TabButtons from './TabButton';
 import MarketSummary from '../MarketSummary';
 import Portfolio from '../Portfolio';
+import Transactions from '../Transactions';
 import './tabs.scss';
 const TabControl = ({ children }) => {
   const labels = [];
@@ -15,7 +16,7 @@ const TabControl = ({ children }) => {
     if (label === 'Portfolio') {
       return <Portfolio />;
     } else if (label === 'Transactions') {
-      return <p> Transaction content goes here</p>;
+      return <Transactions />;
     } else if (label === 'Market Summary') {
       return <MarketSummary />;
     }
