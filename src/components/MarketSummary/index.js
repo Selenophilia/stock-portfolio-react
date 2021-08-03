@@ -1,121 +1,108 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import MaterialTable from 'material-table';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import './index.scss';
 import { getMarketSummary } from '../../api';
 
+import './index.scss';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 900
+  }
+});
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14
+  }
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
+}))(TableRow);
+
+function createData(
+  symbol,
+  company,
+  change,
+  previousclose,
+  high,
+  low,
+  volume,
+  current
+) {
+  return { symbol, company, change, previousclose, high, low, volume, current };
+}
+
+const rows = [
+  createData('msft', 'Microsoft', 12, '50.12', '150', ' 100.2', '50.2', '200'),
+  createData('aapl', 'Apple Inc', 12, '50.12', '150', ' 100.2', '50.2', '200'),
+  createData('goog', 'Google', 12, '50.12', '150', ' 100.2', '50.2', '200'),
+  createData('msft', 'Microsoft', 12, '50.12', '150', ' 100.2', '50.2', '200'),
+  createData('tsla', 'Tesla', 12, '50.12', '150', ' 100.2', '50.2', '200'),
+  createData('msft', 'Microsoft', 12, '50.12', '150', ' 100.2', '50.2', '200'),
+  createData('msft', 'Microsoft', 12, '50.12', '150', ' 100.2', '50.2', '200'),
+  createData('msft', 'Microsoft', 12, '50.12', '150', ' 100.2', '50.2', '200')
+];
 const MarketSummary = ({}) => {
   const [data, setData] = useState([]);
+  const classes = useStyles();
 
-  const columns = [
-    {
-      title: 'Ticker Symbol',
-      field: 'symbol'
-    },
-    {
-      title: 'Company',
-      field: 'companyName'
-    },
-    {
-      title: 'Change',
-      field: 'change'
-    },
-    {
-      title: 'Open',
-      field: 'openTime'
-    },
-    {
-      title: 'High',
-      field: 'highTime'
-    },
-    {
-      title: 'Low',
-      field: 'low'
-    },
-    {
-      title: 'Previous Close',
-      field: 'previousClose'
-    },
-    {
-      title: 'Volume',
-      field: 'previousVolume'
-    },
-    {
-      title: 'Current Value',
-      field: 'latestPrice'
-    }
-  ];
-
-  const stocks = [
-    {
-      symbol: 'msft',
-      company: 'Microsoft',
-      change: 12,
-      open: '50.12',
-      previousclose: '150',
-      high: ' 100.2',
-      low: '150.2',
-      volume: '50.2',
-      current: '200'
-    },
-    {
-      symbol: 'aapl',
-      company: 'Apple Inc',
-      change: 24,
-      open: '100.23',
-      previousclose: '150',
-      high: '100.2',
-      low: '150.2',
-      volume: '50.2',
-      current: '200'
-    },
-    {
-      symbol: 'goog',
-      company: 'Google',
-      change: 18,
-      open: '200.21',
-      previousclose: '150',
-      high: '100.2',
-      low: '150.2',
-      volume: '50.2',
-      current: '200'
-    },
-    {
-      symbol: 'tsla',
-      company: 'Tesla',
-      change: 25,
-      open: '150.23',
-      previousclose: '150',
-      high: '100.2',
-      low: '150.2',
-      volume: '50.2',
-      current: '200'
-    }
-  ];
-
-  useEffect(() => {
-    //const results = await getMarketSummary();
-    setData(stocks);
-  }, []);
+  // useEffect(() => {
+  //   //const results = await getMarketSummary();
+  //   setData(stocks);
+  // }, []);
 
   return (
     <div className="stock-table">
-      <MaterialTable
-        data={data}
-        columns={columns}
-        options={{
-          search: false,
-          paging: true,
-          filtering: false,
-          exportButton: false,
-          showTitle: false,
-          toolbar: false,
-          tableLayout: 'fixed',
-          headerStyle: {
-            whiteSpace: 'nowrap'
-          }
-        }}
-      />
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="left">Ticker Symbol</StyledTableCell>
+              <StyledTableCell align="left">Company</StyledTableCell>
+              <StyledTableCell align="left">Change</StyledTableCell>
+              <StyledTableCell align="left">Open</StyledTableCell>
+              <StyledTableCell align="left">High</StyledTableCell>
+              <StyledTableCell align="left">Previous Close</StyledTableCell>
+              <StyledTableCell align="left">Volume</StyledTableCell>
+              <StyledTableCell align="left">Current Value</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.name}>
+                <StyledTableCell align="left">{row.symbol}</StyledTableCell>
+                <StyledTableCell align="left">{row.company}</StyledTableCell>
+                <StyledTableCell align="left">{row.change}</StyledTableCell>
+                <StyledTableCell align="left">{row.open}</StyledTableCell>
+                <StyledTableCell align="left">{row.high}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {row.previousclose}
+                </StyledTableCell>
+                <StyledTableCell align="left">{row.volume}</StyledTableCell>
+                <StyledTableCell align="left">{row.current}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
