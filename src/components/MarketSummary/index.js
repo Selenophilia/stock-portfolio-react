@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -22,10 +22,11 @@ const useStyles = makeStyles({
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    fontSize: 24
   },
   body: {
-    fontSize: 14
+    fontSize: 24
   }
 }))(TableCell);
 
@@ -61,14 +62,7 @@ const rows = [
   createData('msft', 'Microsoft', 12, '50.12', '150', ' 100.2', '50.2', '200')
 ];
 const MarketSummary = ({}) => {
-  const [data, setData] = useState([]);
   const classes = useStyles();
-
-  // useEffect(() => {
-  //   //const results = await getMarketSummary();
-  //   setData(stocks);
-  // }, []);
-
   return (
     <div className="stock-table">
       <TableContainer component={Paper}>
