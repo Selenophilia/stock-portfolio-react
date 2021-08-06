@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+//import StockContext from '../../contexts/StockContext';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,10 +21,11 @@ const useStyles = makeStyles({
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    fontSize: 22
   },
   body: {
-    fontSize: 14
+    fontSize: 22
   }
 }))(TableCell);
 
@@ -35,19 +37,7 @@ const StyledTableRow = withStyles((theme) => ({
   }
 }))(TableRow);
 
-function createData(symbol, change, quantity, price, cost) {
-  return { symbol, change, quantity, price, cost };
-}
-
-const rows = [
-  createData('AAPL', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('MSFT', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('GOOG', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('AAPL', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('AAPL', '-0.24%', '1 share', '150.99', '25.00')
-];
-
-const Portfolio = ({ ...props }) => {
+const Portfolio = ({ rows }) => {
   const classes = useStyles();
 
   return (
@@ -68,8 +58,8 @@ const Portfolio = ({ ...props }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
+            {rows.map((row, idx) => (
+              <StyledTableRow key={idx}>
                 <StyledTableCell align="left">{row.symbol}</StyledTableCell>
                 <StyledTableCell align="left">{row.change}</StyledTableCell>
                 <StyledTableCell align="left">{row.quantity}</StyledTableCell>
@@ -84,6 +74,8 @@ const Portfolio = ({ ...props }) => {
   );
 };
 
-Portfolio.propTypes = {};
+Portfolio.propTypes = {
+  rows: PropTypes.array.isRequired
+};
 
 export default Portfolio;

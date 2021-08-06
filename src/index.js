@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { StockProvider } from './contexts/StockContext';
 import reportWebVitals from './reportWebVitals';
 import {
   ApolloProvider,
@@ -21,7 +22,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <StockProvider>
+      <App />
+    </StockProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );

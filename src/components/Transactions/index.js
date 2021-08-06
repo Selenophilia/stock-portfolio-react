@@ -1,8 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { BigNumber } from 'bignumber.js';
 import { transactions } from '../../api/queries.js';
-import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
