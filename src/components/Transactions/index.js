@@ -1,4 +1,7 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
+import { BigNumber } from 'bignumber.js';
+import { transactions } from '../../api/queries.js';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -20,10 +23,11 @@ const useStyles = makeStyles({
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    fontSize: 24
   },
   body: {
-    fontSize: 14
+    fontSize: 24
   }
 }))(TableCell);
 
@@ -35,50 +39,44 @@ const StyledTableRow = withStyles((theme) => ({
   }
 }))(TableRow);
 
-function createData(symbol, change, quantity, price, cost) {
-  return { symbol, change, quantity, price, cost };
-}
-
-const rows = [
-  createData('AAPL', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('MSFT', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('GOOG', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('AAPL', '-0.24%', '1 share', '150.99', '25.00'),
-  createData('AAPL', '-0.24%', '1 share', '150.99', '25.00')
-];
-
-const Transactions = ({ ...props }) => {
+const Transactions = ({}) => {
   const classes = useStyles();
-
+  const { loading, error, data = {} } = useQuery(transactions);
   return (
     <div className="transactions">
       <div className="title">
         <h1>Transaction History</h1>
       </div>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">Ticker Symbol</StyledTableCell>
-              <StyledTableCell align="left">Change</StyledTableCell>
-              <StyledTableCell align="left">Quantity</StyledTableCell>
-              <StyledTableCell align="left">Price</StyledTableCell>
-              <StyledTableCell align="left">Total Cost</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.symbol}</StyledTableCell>
-                <StyledTableCell align="left">{row.change}</StyledTableCell>
-                <StyledTableCell align="left">{row.quantity}</StyledTableCell>
-                <StyledTableCell align="left">{row.price}</StyledTableCell>
-                <StyledTableCell align="left">{row.cost}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {loading && <p> loading... </p>}
+      {error && <p> {`Error! ${error.message}`}</p>}
+      {data.getTransactions !== undefined && (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">id</StyledTableCell>
+                <StyledTableCell align="left">Quantity</StyledTableCell>
+                <StyledTableCell align="left">username</StyledTableCell>
+                <StyledTableCell align="left">CreatedAt</StyledTableCell>
+                <StyledTableCell align="left">Purchase Price</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.getTransactions.map((row) => (
+                <StyledTableRow key={row.name}>
+                  <StyledTableCell align="left">{row.id}</StyledTableCell>
+                  <StyledTableCell align="left">{row.quantity}</StyledTableCell>
+                  <StyledTableCell align="left">{'user+1'}</StyledTableCell>
+                  <StyledTableCell align="left">{'user+1'}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {row.purchasePrice}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </div>
   );
 };
