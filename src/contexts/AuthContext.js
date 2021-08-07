@@ -13,16 +13,20 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case SET_AUTH:
-        return [{ ...state, ...action.payload }];
+        return { ...state, accessToken: action.payload.accessToken };
       default:
         return state;
     }
   }, initialState);
 
   const setAuth = (auth) => {
+    const accessToken = auth.token;
     dispatch({
       type: SET_AUTH,
-      payload: [{ ...state, ...auth }]
+      payload: {
+        ...state,
+        accessToken
+      }
     });
   };
 
