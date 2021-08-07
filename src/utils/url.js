@@ -1,4 +1,4 @@
 export const URL_HELPERS = {
-  index: '/',
+  index: '/home',
   login: '/login'
 };
