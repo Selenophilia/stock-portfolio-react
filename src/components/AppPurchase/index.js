@@ -21,7 +21,6 @@ const AppPurchase = ({ rows }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     purchaseFunc();
-    console.log('[mutation]', data);
     rows.push({
       symbol: `${symbolRef.current.value}`,
       change: '-0.24%',

@@ -22,13 +22,13 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <AuthProvider>
-        <Router>
+    <Router>
+      <ApolloProvider client={client}>
+        <AuthProvider>
           <Routes />
-        </Router>
-      </AuthProvider>
-    </ApolloProvider>
+        </AuthProvider>
+      </ApolloProvider>
+    </Router>
   );
 }
 
