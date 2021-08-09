@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useMutation } from '@apollo/client';
 import { purchase } from '../../api/mutation';
 import PropTypes from 'prop-types';
@@ -7,7 +7,7 @@ import './index.scss';
 const AppPurchase = ({ rows }) => {
   const symbolRef = useRef();
   const quantiyRef = useRef();
-
+  //get transactionid
   const [purchaseFunc, { data }] = useMutation(purchase, {
     variables: {
       symbol: symbolRef.current ? `${symbolRef.current.value}` : '',
@@ -20,6 +20,7 @@ const AppPurchase = ({ rows }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('[purchase]', data);
     purchaseFunc();
     rows.push({
       symbol: `${symbolRef.current.value}`,

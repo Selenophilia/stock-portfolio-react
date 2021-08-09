@@ -1,5 +1,7 @@
 import React, { useRef, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { register } from '../../api/mutation';
 import AuthContext from '../../contexts/AuthContext';
 import './index.scss';
 const Register = () => {
@@ -7,11 +9,20 @@ const Register = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
-  const { state, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
+
+  const [registerFunc, { data }] = useMutation(register, {
+    variables: {
+      signupPassword: passwordRef.current.value,
+      signupEmail: emailRef.current.value,
+      signupUsername: nameRef.current.value
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //setAuth tokens upon login
+    registerFunc();
+    console.log('[register]', data);
     history.push('/');
   };
 

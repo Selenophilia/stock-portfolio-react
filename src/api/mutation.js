@@ -26,4 +26,35 @@ const purchase = gql`
   }
 `;
 
-export { purchase };
+const login = gql`
+  mutation ($loginEmail: String!, $loginPassword: String!) {
+    login(email: $loginEmail, password: $loginPassword) {
+      token
+      user {
+        email
+        id
+      }
+    }
+  }
+`;
+
+const register = gql`
+  mutation (
+    $signupUsername: String!
+    $signupEmail: String!
+    $signupPassword: String!
+  ) {
+    signup(
+      username: $signupUsername
+      email: $signupEmail
+      password: $signupPassword
+    ) {
+      token
+      user {
+        email
+      }
+    }
+  }
+`;
+
+export { purchase, login, register };
