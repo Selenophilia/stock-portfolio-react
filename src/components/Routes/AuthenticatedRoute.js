@@ -9,12 +9,12 @@ const AuthenticatedRoute = ({
   ...rest
 }) => {
   const { state } = useContext(AuthContext);
-  console.log('[AuthenticatedRoutes]', state);
+  const user = localStorage.getItem('accessToken');
   return (
     <Route
       {...rest}
       render={(matchProps) =>
-        state.accessToken ? (
+        state.accessToken || user ? (
           <Layout {...matchProps}>
             <Component {...matchProps} />
           </Layout>

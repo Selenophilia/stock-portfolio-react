@@ -1,17 +1,30 @@
+import { useMutation } from '@apollo/client';
 import React, { useRef, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { login } from '../../api/mutation';
 import AuthContext from '../../contexts/AuthContext';
 import './index.scss';
 const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
-  const { state, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
+
+  const [loginFunc] = useMutation(login, {
+    onCompleted: (data) => {
+      setAuth(data.login);
+      history.push('/');
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //setAuth tokens upon login
-    history.push('/');
+    loginFunc({
+      variables: {
+        loginEmail: emailRef.current.value,
+        loginPassword: passwordRef.current.value
+      }
+    });
   };
 
   return (

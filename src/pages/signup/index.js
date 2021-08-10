@@ -11,19 +11,22 @@ const Register = () => {
   const history = useHistory();
   const { setAuth } = useContext(AuthContext);
 
-  const [registerFunc, { data }] = useMutation(register, {
-    variables: {
-      signupPassword: passwordRef.current.value,
-      signupEmail: emailRef.current.value,
-      signupUsername: nameRef.current.value
+  const [registerFunc] = useMutation(register, {
+    onCompleted: (data) => {
+      setAuth(data.signup);
+      history.push('/');
     }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerFunc();
-    console.log('[register]', data);
-    history.push('/');
+    registerFunc({
+      variables: {
+        signupPassword: passwordRef.current.value,
+        signupEmail: emailRef.current.value,
+        signupUsername: nameRef.current.value
+      }
+    });
   };
 
   return (

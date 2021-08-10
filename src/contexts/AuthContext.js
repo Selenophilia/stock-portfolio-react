@@ -1,10 +1,10 @@
 import React, { useReducer, createContext } from 'react';
 import Proptypes from 'prop-types';
-import { SET_AUTH } from './constants';
+import { SIGN_IN, SIGN_OUT } from './constants';
 
 const initialState = {
   accessToken: '',
-  loading: true
+  user: {}
 };
 
 const AuthContext = createContext(initialState);
@@ -12,8 +12,16 @@ const AuthContext = createContext(initialState);
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
-      case SET_AUTH:
-        return { ...state, accessToken: action.payload.accessToken };
+      case SIGN_IN:
+        return {
+          ...state,
+          accessToken: action.payload.accessToken,
+          user: {
+            ...action.payload.user
+          }
+        };
+      case SIGN_OUT:
+        return { ...state, accessToken: action.payload.accessToken, user: {} };
       default:
         return state;
     }
@@ -21,17 +29,31 @@ export const AuthProvider = ({ children }) => {
 
   const setAuth = (auth) => {
     const accessToken = auth.token;
+    localStorage.setItem('accessToken', JSON.stringify(accessToken));
     dispatch({
-      type: SET_AUTH,
+      type: SIGN_IN,
       payload: {
-        ...state,
-        accessToken
+        accessToken,
+        user: {
+          ...auth.user
+        }
+      }
+    });
+  };
+
+  const signOut = () => {
+    localStorage.clear();
+    dispatch({
+      type: SIGN_OUT,
+      payload: {
+        accessToken: '',
+        user: {}
       }
     });
   };
 
   return (
-    <AuthContext.Provider value={{ state, setAuth }}>
+    <AuthContext.Provider value={{ state, setAuth, signOut }}>
       {children}
     </AuthContext.Provider>
   );

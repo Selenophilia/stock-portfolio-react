@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const GuestRoute = ({ layout: Layout, component: Component, ...rest }) => {
-  console.log('[GuestRoute]');
   return (
     <Route
       {...rest}
