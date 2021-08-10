@@ -4,30 +4,27 @@ import { purchase } from '../../api/mutation';
 import PropTypes from 'prop-types';
 import './index.scss';
 
-const AppPurchase = ({ rows }) => {
+const AppPurchase = ({}) => {
   const symbolRef = useRef();
   const quantiyRef = useRef();
+
   //get transactionid
-  const [purchaseFunc, { data }] = useMutation(purchase, {
-    variables: {
-      symbol: symbolRef.current ? `${symbolRef.current.value}` : '',
-      price: 150.23,
-      openPrice: 50.12,
-      purchasePrice: 142.2,
-      purchaseQuantity: quantiyRef.current ? `${quantiyRef.current.value}` : ''
+  const [purchaseFunc] = useMutation(purchase, {
+    onCompleted: (data) => {
+      console.log('data', data);
     }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('[purchase]', data);
-    purchaseFunc();
-    rows.push({
-      symbol: `${symbolRef.current.value}`,
-      change: '-0.24%',
-      quantity: `${quantiyRef.current.value} share`,
-      price: '150.99',
-      cost: '25.00'
+    purchaseFunc({
+      variables: {
+        symbol: symbolRef.current.value,
+        price: 150.23,
+        openPrice: 50.12,
+        purchasePrice: 142.2,
+        purchaseQuantity: Number(quantiyRef.current.value)
+      }
     });
   };
 
