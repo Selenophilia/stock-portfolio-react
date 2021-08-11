@@ -29,7 +29,12 @@ export const AuthProvider = ({ children }) => {
 
   const setAuth = (auth) => {
     const accessToken = auth.token;
-    localStorage.setItem('accessToken', JSON.stringify(accessToken));
+    localStorage.setItem(
+      'accessToken',
+      JSON.stringify(accessToken).replace(/^"(.*)"$/, '$1')
+    );
+    console.log('[set token holder here]');
+
     dispatch({
       type: SIGN_IN,
       payload: {

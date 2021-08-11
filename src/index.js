@@ -3,10 +3,39 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { setContext } from '@apollo/client/link/context';
+import {
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
+  ApolloClient
+} from '@apollo/client';
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000'
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('accessToken');
+  console.log('[get token  here]');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
