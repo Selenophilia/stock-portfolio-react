@@ -5,7 +5,6 @@ import { register } from '../../api/mutation';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
@@ -45,9 +44,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(1)
   },
+  input: {
+    color: 'red'
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: '#1467af'
+    backgroundColor: '#1467af',
+    color: '#fff'
   }
 }));
 
@@ -80,7 +83,6 @@ const Register = () => {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
@@ -101,6 +103,7 @@ const Register = () => {
               name="username"
               autoComplete="username"
               autoFocus
+              className={classes.input}
               inputRef={nameRef}
             />
             <TextField

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import reportWebVitals from './reportWebVitals';
 import { setContext } from '@apollo/client/link/context';
 import {
@@ -10,7 +11,7 @@ import {
   createHttpLink,
   ApolloClient
 } from '@apollo/client';
-
+import { AuthProvider } from './contexts/AuthContext';
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000'
 });
@@ -34,7 +35,10 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <AuthProvider>
+        <CssBaseline />
+        <App />
+      </AuthProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

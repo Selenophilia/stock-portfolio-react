@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
       'accessToken',
       JSON.stringify(accessToken).replace(/^"(.*)"$/, '$1')
     );
+    localStorage.setItem('user', JSON.stringify(auth.user));
     console.log('[set token holder here]');
 
     dispatch({
