@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import {
+  makeStyles,
+  withStyles,
+  createTheme,
+  ThemeProvider
+} from '@material-ui/core/styles';
+import {
+  AppBar,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+  Button,
+  ListItemIcon,
+  ListItemText,
+  Box
+} from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import { green } from '@material-ui/core/colors';
+import AppPurchaseModal from '../AppPurchaseModal';
 import './index.scss';
-import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -33,6 +42,11 @@ const useStyles = makeStyles(() => ({
   signout: {
     marginLeft: 10,
     color: '#fff'
+  },
+  buy: {
+    color: '#fff',
+    width: 100,
+    height: 30
   }
 }));
 
@@ -55,6 +69,12 @@ const StyledMenu = withStyles({
     {...props}
   />
 ));
+
+const theme = createTheme({
+  palette: {
+    primary: green
+  }
+});
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
@@ -97,8 +117,18 @@ const AppHeader = () => {
               IEX Stock Application
             </Box>
           </Typography>
+          {/* <ThemeProvider theme={theme}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.buy}
+              disableElevation
+            >
+              Buy
+            </Button>
+          </ThemeProvider> */}
+          <AppPurchaseModal />
           <Button
-            variant="h6"
             color="inherit"
             aria-controls="simple-menu"
             aria-haspopup="true"
