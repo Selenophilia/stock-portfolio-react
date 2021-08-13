@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  makeStyles,
-  withStyles,
-  createTheme,
-  ThemeProvider
-} from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Menu,
@@ -20,7 +15,6 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import { green } from '@material-ui/core/colors';
 import AppPurchaseModal from '../AppPurchaseModal';
 import './index.scss';
 
@@ -70,34 +64,23 @@ const StyledMenu = withStyles({
   />
 ));
 
-const theme = createTheme({
-  palette: {
-    primary: green
-  }
-});
-
-const StyledMenuItem = withStyles((theme) => ({
+const StyledMenuItem = withStyles(() => ({
   root: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white
-      }
-    }
+    color: 'black'
   }
 }))(MenuItem);
 
 const AppHeader = () => {
   const classes = useStyles();
   const user = localStorage.getItem('user');
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [menu, setMenu] = useState(null);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    setMenu(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setMenu(null);
   };
   const { username } = JSON.parse(user);
   const history = useHistory();
@@ -117,16 +100,6 @@ const AppHeader = () => {
               IEX Stock Application
             </Box>
           </Typography>
-          {/* <ThemeProvider theme={theme}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.buy}
-              disableElevation
-            >
-              Buy
-            </Button>
-          </ThemeProvider> */}
           <AppPurchaseModal />
           <Button
             color="inherit"
@@ -141,9 +114,9 @@ const AppHeader = () => {
           </Button>
           <StyledMenu
             id="customized-menu"
-            anchorEl={anchorEl}
+            anchorEl={menu}
             keepMounted
-            open={Boolean(anchorEl)}
+            open={Boolean(menu)}
             onClose={handleClose}
           >
             <StyledMenuItem onClick={handleLogout}>

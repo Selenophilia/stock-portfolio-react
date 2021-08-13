@@ -41,7 +41,10 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     width: 100,
     height: 30,
-    background: '#4ac733'
+    background: '#4ac733',
+    '&:hover': {
+      backgroundColor: '#42b42e'
+    }
   },
   field: {
     marginBottom: 50
@@ -50,15 +53,21 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     width: 100,
     height: 40,
-    background: '#4ac733',
-    marginLeft: 20
+    backgroundColor: theme.palette.primary.main,
+    marginLeft: 20,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark
+    }
   },
   cancel: {
     color: '#fff',
     width: 100,
     height: 40,
     background: '#b54928',
-    marginLeft: 20
+    marginLeft: 20,
+    '&:hover': {
+      backgroundColor: '#ac4525'
+    }
   },
   divider: {
     marginTop: 20,
