@@ -1,54 +1,74 @@
 import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Modal } from '@material-ui/core';
-
+import {
+  Avatar,
+  Button,
+  Modal,
+  Typography,
+  TextField
+} from '@material-ui/core';
+import PaymentIcon from '@material-ui/icons/Payment';
 import { useMutation } from '@apollo/client';
 import { purchase } from '../../api/mutation';
 import PropTypes from 'prop-types';
 import './index.scss';
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
 
 const useStyles = makeStyles((theme) => ({
+  title: {
+    fontWeight: 600,
+    marginBottom: 20,
+    color: '#6c6c6c'
+  },
+  avatar: {
+    margin: 'auto',
+    backgroundColor: theme.palette.primary.main,
+    height: 64,
+    width: 64
+  },
   paper: {
     position: 'absolute',
     height: 500,
-    width: 500,
+    width: 450,
+    top: '10%',
+    marginLeft: 500,
     backgroundColor: theme.palette.background.paper,
     border: 'none',
     borderRadius: 12,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    padding: 40
   },
   buy: {
     color: '#fff',
     width: 100,
     height: 30,
     background: '#4ac733'
+  },
+  field: {
+    marginBottom: 50
+  },
+  confirm: {
+    color: '#fff',
+    width: 100,
+    height: 40,
+    background: '#4ac733',
+    marginLeft: 20
+  },
+  cancel: {
+    color: '#fff',
+    width: 100,
+    height: 40,
+    background: '#b54928',
+    marginLeft: 20
   }
 }));
 
 export const AppPurchaseModal = () => {
   const classes = useStyles();
-  const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
   const symbolRef = useRef();
   const quantiyRef = useRef();
 
-  //get transactionid
   const [purchaseFunc] = useMutation(purchase, {
     onCompleted: (data) => {
       console.log('data', data);
@@ -77,14 +97,39 @@ export const AppPurchaseModal = () => {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h4 id="simple-modal-title">Buy a stock</h4>
+    <div className={classes.paper}>
+      <Typography variant="h5" component="h2" className={classes.title}>
+        Buy a stock
+      </Typography>
+      <Avatar className={classes.avatar}>
+        <PaymentIcon fontSize="large" />
+      </Avatar>
       <form className="purchase-form" onSubmit={handleSubmit}>
-        <label className="form-label">Ticker Symbol:</label>
-        <input className="ticker" type="text" ref={symbolRef} />
-        <label className="form-label">Quantity:</label>
-        <input className="quantiy" type="number" ref={quantiyRef} />
-        <button className="buy-btn">Buy</button>
+        <div className="form-group">
+          <TextField
+            id="outlined-basic"
+            label="Ticker Symbol"
+            className={classes.field}
+            variant="outlined"
+            inputRef={symbolRef}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Quantity"
+            className={classes.field}
+            variant="outlined"
+            inputRef={quantiyRef}
+          />
+          {/* <label className="form-label">Quantity:</label>
+          <input className="quantiy" type="number" ref={quantiyRef} /> */}
+        </div>
+        <div className="btn-group">
+          <Button className={classes.cancel} onClick={handleClose}>
+            {' '}
+            Cancel{' '}
+          </Button>
+          <Button className={classes.confirm}> Confirm </Button>
+        </div>
       </form>
     </div>
   );
