@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
   Button,
+  Divider,
   Modal,
   Typography,
   TextField
@@ -10,7 +11,6 @@ import {
 import PaymentIcon from '@material-ui/icons/Payment';
 import { useMutation } from '@apollo/client';
 import { purchase } from '../../api/mutation';
-import PropTypes from 'prop-types';
 import './index.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    height: 500,
+    height: 550,
     width: 450,
     top: '10%',
     marginLeft: 500,
@@ -59,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     background: '#b54928',
     marginLeft: 20
+  },
+  divider: {
+    marginTop: 20,
+    marginBottom: 20
   }
 }));
 
@@ -104,6 +108,7 @@ export const AppPurchaseModal = () => {
       <Avatar className={classes.avatar}>
         <PaymentIcon fontSize="large" />
       </Avatar>
+      <Divider variant="middle" className={classes.divider} />
       <form className="purchase-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <TextField
@@ -120,13 +125,10 @@ export const AppPurchaseModal = () => {
             variant="outlined"
             inputRef={quantiyRef}
           />
-          {/* <label className="form-label">Quantity:</label>
-          <input className="quantiy" type="number" ref={quantiyRef} /> */}
         </div>
         <div className="btn-group">
           <Button className={classes.cancel} onClick={handleClose}>
-            {' '}
-            Cancel{' '}
+            Cancel
           </Button>
           <Button className={classes.confirm}> Confirm </Button>
         </div>
