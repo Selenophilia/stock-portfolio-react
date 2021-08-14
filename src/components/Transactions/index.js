@@ -2,30 +2,43 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { transactions } from '../../api/queries.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
-import './index.scss';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography
+} from '@material-ui/core';
 
 const useStyles = makeStyles({
+  headings: {
+    marginBottom: 20
+  },
+  text: {
+    fontSize: 22,
+    fontWeight: 500
+  },
   table: {
-    minWidth: 900
+    minWidth: 1024
+  },
+  container: {
+    maxHeight: 500
   }
 });
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-    fontSize: 24
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
+    fontSize: 22,
+    fontWeight: 400
   },
   body: {
-    fontSize: 24
+    fontSize: 18,
+    fontWeight: 400
   }
 }))(TableCell);
 
@@ -42,38 +55,49 @@ const Transactions = ({}) => {
   const { loading, error, data = {} } = useQuery(transactions);
   return (
     <div className="transactions">
-      <div className="title">
-        <h1>Transaction History</h1>
-      </div>
       {loading && <p> loading... </p>}
       {error && <p> {`Error! ${error.message}`}</p>}
-      {data.getTransactions !== undefined && (
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
+      {data.getTransactions ? (
+        <TableContainer component={Paper} className={classes.container}>
+          <Table
+            className={classes.table}
+            stickyHeader
+            aria-label="sticky table"
+          >
             <TableHead>
               <TableRow>
                 <StyledTableCell align="left">id</StyledTableCell>
                 <StyledTableCell align="left">Quantity</StyledTableCell>
-                <StyledTableCell align="left">username</StyledTableCell>
+                <StyledTableCell align="left">Username</StyledTableCell>
                 <StyledTableCell align="left">CreatedAt</StyledTableCell>
                 <StyledTableCell align="left">Purchase Price</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.getTransactions.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell align="left">{row.id}</StyledTableCell>
-                  <StyledTableCell align="left">{row.quantity}</StyledTableCell>
-                  <StyledTableCell align="left">{'user+1'}</StyledTableCell>
-                  <StyledTableCell align="left">{'user+1'}</StyledTableCell>
+              {data.getTransactions.map((transaction) => (
+                <StyledTableRow key={transaction.id}>
                   <StyledTableCell align="left">
-                    {row.purchasePrice}
+                    {transaction.id}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {transaction.quantity}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {transaction.purchaseBy.username}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {transaction.createdAt}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {transaction.purchasePrice}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+      ) : (
+        <Typography variant="h1">No Transactions yet</Typography>
       )}
     </div>
   );

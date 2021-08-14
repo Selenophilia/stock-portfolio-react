@@ -5,7 +5,12 @@ const transactions = gql`
     getTransactions {
       id
       quantity
+      createdAt
       purchasePrice
+      purchaseBy {
+        email
+        username
+      }
     }
   }
 `;

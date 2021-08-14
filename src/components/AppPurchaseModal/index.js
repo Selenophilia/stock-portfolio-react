@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
+  Box,
   Button,
   Divider,
   Modal,
@@ -11,7 +12,6 @@ import {
 import PaymentIcon from '@material-ui/icons/Payment';
 import { useMutation } from '@apollo/client';
 import { purchase } from '../../api/mutation';
-import './index.scss';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -47,7 +47,13 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   field: {
-    marginBottom: 50
+    width: '100%',
+    marginTop: 30,
+    marginBottom: 30
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end'
   },
   confirm: {
     color: '#fff',
@@ -70,8 +76,8 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   divider: {
-    marginTop: 20,
-    marginBottom: 20
+    marginTop: 30,
+    marginBottom: 30
   }
 }));
 
@@ -135,12 +141,12 @@ export const AppPurchaseModal = () => {
             inputRef={quantiyRef}
           />
         </div>
-        <div className="btn-group">
+        <Box component="div" className={classes.buttons}>
           <Button className={classes.cancel} onClick={handleClose}>
             Cancel
           </Button>
           <Button className={classes.confirm}> Confirm </Button>
-        </div>
+        </Box>
       </form>
     </div>
   );

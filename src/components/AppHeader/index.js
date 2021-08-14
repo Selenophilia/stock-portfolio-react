@@ -16,7 +16,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import AppPurchaseModal from '../AppPurchaseModal';
-import './index.scss';
 
 const useStyles = makeStyles(() => ({
   container: {

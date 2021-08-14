@@ -30,6 +30,24 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
+  },
+  tabpanels: {
+    width: '100%',
+    background: theme.palette.action.hover
+  },
+  '@global': {
+    '*::-webkit-scrollbar': {
+      width: '0.7em',
+      borderRadius: '50%'
+    },
+    '*::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '*::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      outline: 'none',
+      borderRadius: '20px '
+    }
   }
 }));
 
@@ -85,13 +103,13 @@ const Home = () => {
               aria-label="vertical-tabpanel-2"
             />
           </Tabs>
-          <TabPanel value={value} index={0}>
+          <TabPanel value={value} index={0} className={classes.tabpanels}>
             <Portfolio rows={rows} />
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={1} className={classes.tabpanels}>
             <Transactions />
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          <TabPanel value={value} index={2} className={classes.tabpanels}>
             <MarketSummary />
           </TabPanel>
         </div>

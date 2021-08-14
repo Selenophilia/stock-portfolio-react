@@ -1,31 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-//import StockContext from '../../contexts/StockContext';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
-import './index.scss';
+import {
+  Box,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper
+} from '@material-ui/core';
 
 const useStyles = makeStyles({
+  headings: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: 20
+  },
+  text: {
+    fontSize: 22,
+    fontWeight: 500
+  },
   table: {
-    minWidth: 900
+    minWidth: 1024
+  },
+  container: {
+    maxHeight: 500
   }
 });
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-    fontSize: 22
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
+    fontSize: 22,
+    fontWeight: 400
   },
   body: {
-    fontSize: 22
+    fontSize: 18,
+    fontWeight: 400
   }
 }))(TableCell);
 
@@ -39,15 +54,18 @@ const StyledTableRow = withStyles((theme) => ({
 
 const Portfolio = ({ rows }) => {
   const classes = useStyles();
-
   return (
     <div className="portfolio">
-      <div className="title">
-        <h1>{'Your Portfolio'}</h1>
-        <h1>{'Balance: $ 50,000.00'}</h1>
-      </div>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+      <Box component="div" className={classes.headings}>
+        <Typography variant="h5" className={classes.text}>
+          Your Portfolio
+        </Typography>
+        <Typography variant="h5" className={classes.text}>
+          Balance: $ 50,000.00
+        </Typography>
+      </Box>
+      <TableContainer component={Paper} className={classes.container}>
+        <Table className={classes.table} stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">Ticker Symbol</StyledTableCell>
