@@ -12,11 +12,10 @@ import { getMarketSummary } from '../../api';
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 1024
+    width: '100%'
   },
   container: {
-    maxHeight: 550,
-    maxWidth: '100%'
+    maxHeight: 550
   }
 });
 
