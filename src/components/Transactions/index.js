@@ -52,7 +52,11 @@ const StyledTableRow = withStyles((theme) => ({
 
 const Transactions = ({}) => {
   const classes = useStyles();
-  const { loading, error, data = {} } = useQuery(transactions);
+  const {
+    loading,
+    error,
+    data = {}
+  } = useQuery(transactions, { fetchPolicy: 'network-only' });
   return (
     <div className="transactions">
       {loading && <p> loading... </p>}
