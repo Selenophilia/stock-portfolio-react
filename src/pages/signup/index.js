@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { register } from '../../api/mutation';
@@ -12,11 +12,10 @@ import {
   Button,
   Grid
 } from '@material-ui/core';
-
+import Alert from '../../components/Errorhandler';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import { makeStyles } from '@material-ui/core/styles';
 import AuthContext from '../../contexts/AuthContext';
-import './index.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,10 +62,15 @@ const Register = () => {
   const passwordRef = useRef();
   const history = useHistory();
   const { setAuth } = useContext(AuthContext);
+  const [message, setMessage] = useState('');
 
   const classes = useStyles();
 
   const [registerFunc] = useMutation(register, {
+    onError: (err) => {
+      setMessage(err.message);
+      console.log(err);
+    },
     onCompleted: (data) => {
       setAuth(data.signup);
       history.push('/');
@@ -75,13 +79,25 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerFunc({
-      variables: {
-        signupPassword: passwordRef.current.value,
-        signupEmail: emailRef.current.value,
-        signupUsername: nameRef.current.value
-      }
-    });
+    if (
+      passwordRef.current.value ||
+      emailRef.current.value ||
+      nameRef.current.value
+    ) {
+      registerFunc({
+        variables: {
+          signupPassword: passwordRef.current.value,
+          signupEmail: emailRef.current.value,
+          signupUsername: nameRef.current.value
+        }
+      });
+    } else {
+      setMessage('Please fill up the required fields below');
+    }
+  };
+
+  const clearMessage = () => {
+    setMessage('');
   };
 
   return (
@@ -95,6 +111,15 @@ const Register = () => {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
+          {message ? (
+            <Alert
+              className={classes.alert}
+              message={message}
+              clearMessage={clearMessage}
+            />
+          ) : (
+            ''
+          )}
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               variant="outlined"
