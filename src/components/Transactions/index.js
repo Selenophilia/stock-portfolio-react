@@ -58,7 +58,6 @@ const Transactions = ({}) => {
     error,
     data = {}
   } = useQuery(transactions, { fetchPolicy: 'cache-and-network' });
-
   return (
     <div className="transactions">
       {loading && <p> loading... </p>}
@@ -80,25 +79,26 @@ const Transactions = ({}) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.getTransactions.map((transaction) => (
-                <StyledTableRow key={transaction.id}>
-                  <StyledTableCell align="left">
-                    {transaction.id}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {transaction.quantity}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {transaction.purchaseBy.username}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {transaction.createdAt}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {BigNumber(transaction.purchasePrice).c}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+              {data.getTransactions.map((transaction) => {
+                const str = transaction.createdAt.split('T');
+                return (
+                  <StyledTableRow key={transaction.id}>
+                    <StyledTableCell align="left">
+                      {transaction.id}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {transaction.quantity}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {transaction.purchaseBy.username}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">{str[0]}</StyledTableCell>
+                    <StyledTableCell align="left">
+                      {`$${BigNumber(transaction.purchasePrice).c}`}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
