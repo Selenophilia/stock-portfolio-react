@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../api/mutation';
 import AuthContext from '../../contexts/AuthContext';
@@ -10,10 +10,15 @@ import {
   Paper,
   Typography,
   Button,
-  Grid
+  Grid,
+  Collapse,
+  IconButton
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import Alert from '../../components/Errorhandler';
 import './index.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
     backgroundColor: '#1467af'
+  },
+  alert: {
+    width: '40%',
+    '& > * + *': {
+      marginTop: theme.spacing(2)
+    }
   }
 }));
 
@@ -56,10 +67,15 @@ const Login = () => {
   const passwordRef = useRef();
   const history = useHistory();
   const { setAuth } = useContext(AuthContext);
+  const [message, setMessage] = useState(null);
+  const [open, setOpen] = useState(true);
 
   const classes = useStyles();
 
   const [loginFunc] = useMutation(login, {
+    onError: (err) => {
+      setMessage(err.message);
+    },
     onCompleted: (data) => {
       setAuth(data.login);
       history.push('/');
@@ -68,12 +84,20 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginFunc({
-      variables: {
-        loginEmail: emailRef.current.value,
-        loginPassword: passwordRef.current.value
-      }
-    });
+    if (emailRef.current.value || passwordRef.current.value) {
+      loginFunc({
+        variables: {
+          loginEmail: emailRef.current.value,
+          loginPassword: passwordRef.current.value
+        }
+      });
+    } else {
+      setMessage('Please include a email and password');
+    }
+  };
+
+  const clearMessage = () => {
+    setMessage('');
   };
 
   return (
@@ -87,6 +111,15 @@ const Login = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {message ? (
+            <Alert
+              className={classes.alert}
+              message={message}
+              clearMessage={clearMessage}
+            />
+          ) : (
+            ''
+          )}
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               variant="outlined"
