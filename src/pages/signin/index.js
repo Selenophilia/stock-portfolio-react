@@ -15,7 +15,6 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '../../components/Errorhandler';
-import './index.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {

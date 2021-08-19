@@ -109,7 +109,7 @@ const Register = () => {
             <PermContactCalendarIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign Up
+            Sign up
           </Typography>
           {message ? (
             <Alert
@@ -161,7 +161,7 @@ const Register = () => {
               type="submit"
               fullWidth
               variant="contained"
-              color="#primary"
+              color="primary"
               className={classes.submit}
             >
               Sign Up
