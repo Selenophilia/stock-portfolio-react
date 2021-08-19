@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { transactions } from '../../api/queries.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import BigNumber from 'bignumber.js';
 import {
   Table,
   TableBody,
@@ -56,7 +57,8 @@ const Transactions = ({}) => {
     loading,
     error,
     data = {}
-  } = useQuery(transactions, { fetchPolicy: 'network-only' });
+  } = useQuery(transactions, { fetchPolicy: 'cache-and-network' });
+
   return (
     <div className="transactions">
       {loading && <p> loading... </p>}
@@ -93,7 +95,7 @@ const Transactions = ({}) => {
                     {transaction.createdAt}
                   </StyledTableCell>
                   <StyledTableCell align="left">
-                    {transaction.purchasePrice}
+                    {BigNumber(transaction.purchasePrice).c}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
