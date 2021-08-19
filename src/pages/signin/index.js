@@ -10,14 +10,10 @@ import {
   Paper,
   Typography,
   Button,
-  Grid,
-  Collapse,
-  IconButton
+  Grid
 } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
 import Alert from '../../components/Errorhandler';
 import './index.scss';
 
@@ -68,7 +64,6 @@ const Login = () => {
   const history = useHistory();
   const { setAuth } = useContext(AuthContext);
   const [message, setMessage] = useState(null);
-  const [open, setOpen] = useState(true);
 
   const classes = useStyles();
 
