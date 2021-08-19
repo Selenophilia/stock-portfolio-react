@@ -7,6 +7,7 @@ const purchase = gql`
     $openPrice: Decimal!
     $purchasePrice: Decimal!
     $purchaseQuantity: Int!
+    $change: Decimal!
   ) {
     purchase(
       symbol: $symbol
@@ -14,6 +15,7 @@ const purchase = gql`
       openPrice: $openPrice
       quantity: $purchaseQuantity
       purchasePrice: $purchasePrice
+      change: $change
     ) {
       id
       purchasePrice
