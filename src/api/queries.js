@@ -15,4 +15,32 @@ const transactions = gql`
   }
 `;
 
-export { transactions };
+const stocks = gql`
+  query {
+    getStocks {
+      symbol
+      createdAt
+      price
+      openPrice
+      change
+      quantity
+      owner {
+        email
+        username
+        balance
+      }
+    }
+  }
+`;
+
+const getUser = gql`
+  query {
+    getUser {
+      id
+      username
+      balance
+    }
+  }
+`;
+
+export { transactions, stocks, getUser };
