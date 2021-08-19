@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import BigNumber from 'bignumber.js';
+import { useQuery } from '@apollo/client';
+import { stocks, getUser } from '../../api/queries';
 import {
   Box,
   Typography,
@@ -41,6 +44,9 @@ const StyledTableCell = withStyles((theme) => ({
   body: {
     fontSize: 18,
     fontWeight: 400
+  },
+  change: {
+    color: '#4ac733'
   }
 }))(TableCell);
 
@@ -52,7 +58,10 @@ const StyledTableRow = withStyles((theme) => ({
   }
 }))(TableRow);
 
-const Portfolio = ({ rows }) => {
+const Portfolio = ({}) => {
+  const { data = {} } = useQuery(stocks, { fetchPolicy: 'cache-and-network' });
+  const user = useQuery(getUser, { fetchPolicy: 'cache-and-network' });
+
   const classes = useStyles();
   return (
     <div className="portfolio">
@@ -60,34 +69,63 @@ const Portfolio = ({ rows }) => {
         <Typography variant="h5" className={classes.text}>
           Your Portfolio
         </Typography>
-        <Typography variant="h5" className={classes.text}>
-          Balance: $ 50,000.00
-        </Typography>
+        {user.data && (
+          <Typography variant="h5" className={classes.text}>
+            {`Balance: $${BigNumber(user.data.getUser.balance).toFormat(2)}`}
+          </Typography>
+        )}
       </Box>
-      <TableContainer component={Paper} className={classes.container}>
-        <Table className={classes.table} stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">Ticker Symbol</StyledTableCell>
-              <StyledTableCell align="left">Change</StyledTableCell>
-              <StyledTableCell align="left">Quantity</StyledTableCell>
-              <StyledTableCell align="left">Price</StyledTableCell>
-              <StyledTableCell align="left">Total Cost</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, idx) => (
-              <StyledTableRow key={idx}>
-                <StyledTableCell align="left">{row.symbol}</StyledTableCell>
-                <StyledTableCell align="left">{row.change}</StyledTableCell>
-                <StyledTableCell align="left">{row.quantity}</StyledTableCell>
-                <StyledTableCell align="left">{row.price}</StyledTableCell>
-                <StyledTableCell align="left">{row.cost}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+
+      {data.getStocks ? (
+        <TableContainer component={Paper} className={classes.container}>
+          <Table
+            className={classes.table}
+            stickyHeader
+            aria-label="sticky table"
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="center">Ticker Symbol</StyledTableCell>
+                <StyledTableCell align="center">Change</StyledTableCell>
+                <StyledTableCell align="center">Quantity</StyledTableCell>
+                <StyledTableCell align="center">Price</StyledTableCell>
+                <StyledTableCell align="center">Total Cost</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.getStocks.map((stocks) => {
+                const price = BigNumber(stocks.price);
+                const openPrice = BigNumber(stocks.openPrice);
+                return (
+                  <StyledTableRow key={stocks.id}>
+                    <StyledTableCell align="center">
+                      {stocks.symbol}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="center"
+                      style={{ color: '#4ac733' }}
+                    >
+                      {`${stocks.change}%`}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {stocks.quantity}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">{price.c}</StyledTableCell>
+                    <StyledTableCell
+                      align="center"
+                      style={{ color: '#b54928' }}
+                    >
+                      {`$${openPrice}`}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography>No stocks yet!</Typography>
+      )}
     </div>
   );
 };
