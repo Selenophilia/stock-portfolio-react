@@ -19,6 +19,8 @@
     "node-sass": "^4.14.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-intl": "^5.20.10",
+    "react-intl-universal": "^2.4.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
@@ -27,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "intl:extract": "react-intl-universal-extract --cmd extract --source-path ./src --output-path ./src/locales/ph.json --verbose"
   },
   "eslintConfig": {
     "extends": [
@@ -42,7 +45,8 @@
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "react-intl-universal-extract": "^1.0.4"
   },
   "browserslist": {
     "production": [
