@@ -46,15 +46,21 @@ const register = gql`
     $signupUsername: String!
     $signupEmail: String!
     $signupPassword: String!
+    $lang: String!
   ) {
     signup(
       username: $signupUsername
       email: $signupEmail
       password: $signupPassword
+      lang: $lang
     ) {
       token
       user {
         email
+        id
+        email
+        lang
+        username
       }
     }
   }
