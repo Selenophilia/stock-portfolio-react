@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getMarketSummary } from '../../api';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles({
   table: {
@@ -61,14 +62,39 @@ const MarketSummary = ({}) => {
           >
             <TableHead>
               <TableRow>
-                <StyledTableCell align="left">Ticker Symbol</StyledTableCell>
-                <StyledTableCell align="left">Company</StyledTableCell>
-                <StyledTableCell align="left">Change</StyledTableCell>
-                <StyledTableCell align="left">Open</StyledTableCell>
-                <StyledTableCell align="left">High</StyledTableCell>
-                <StyledTableCell align="left">Previous Close</StyledTableCell>
-                <StyledTableCell align="left">Volume</StyledTableCell>
-                <StyledTableCell align="left">Current Value</StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage
+                    id="app.symbol"
+                    defaultMessage="Ticker Symbol"
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage id="app.company" defaultMessage="Company" />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage id="app.change" defaultMessage="Change" />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage id="app.open" defaultMessage="Open" />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage id="app.high" defaultMessage="High" />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage
+                    id="app.previousClose"
+                    defaultMessage="Previous Close"
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage id="app.volume" defaultMessage="Volume" />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage
+                    id="app.currentValue"
+                    defaultMessage="Current Value"
+                  />
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

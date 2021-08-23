@@ -1,4 +1,5 @@
 import React, { useRef, useContext, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { register } from '../../api/mutation';
@@ -16,6 +17,7 @@ import Alert from '../../components/Errorhandler';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import { makeStyles } from '@material-ui/core/styles';
 import AuthContext from '../../contexts/AuthContext';
+import { LanguageContext } from '../../contexts/LangContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +64,9 @@ const Register = () => {
   const passwordRef = useRef();
   const history = useHistory();
   const { setAuth } = useContext(AuthContext);
+  const context = useContext(LanguageContext);
   const [message, setMessage] = useState('');
+  const [language, setLanguage] = useState(null);
 
   const classes = useStyles();
 
@@ -73,6 +77,7 @@ const Register = () => {
     },
     onCompleted: (data) => {
       setAuth(data.signup);
+      context.selectLanguage(language);
       history.push('/');
     }
   });
@@ -88,12 +93,18 @@ const Register = () => {
         variables: {
           signupPassword: passwordRef.current.value,
           signupEmail: emailRef.current.value,
-          signupUsername: nameRef.current.value
+          signupUsername: nameRef.current.value,
+          lang: language
         }
       });
     } else {
       setMessage('Please fill up the required fields below');
     }
+  };
+
+  const handleLanguage = (e) => {
+    context.selectLanguage(e.target.value);
+    setLanguage(e.target.value);
   };
 
   const clearMessage = () => {
@@ -109,7 +120,7 @@ const Register = () => {
             <PermContactCalendarIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            <FormattedMessage id="app.signup" defaultMessage="Sign up" />
           </Typography>
           {message ? (
             <Alert
@@ -127,7 +138,12 @@ const Register = () => {
               required
               fullWidth
               id="username"
-              label="User name"
+              label={
+                <FormattedMessage
+                  id="app.username"
+                  defaultMessage="User name"
+                />
+              }
               name="username"
               autoComplete="username"
               autoFocus
@@ -140,7 +156,12 @@ const Register = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={
+                <FormattedMessage
+                  id="app.email"
+                  defaultMessage="Email Address"
+                />
+              }
               name="email"
               autoComplete="email"
               inputRef={emailRef}
@@ -151,12 +172,22 @@ const Register = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={
+                <FormattedMessage id="app.password" defaultMessage="Password" />
+              }
               type="password"
               id="password"
               autoComplete="current-password"
               inputRef={passwordRef}
             />
+            <Typography component="h5" variant="h5">
+              Language:
+              <select value={context.locale} onChange={handleLanguage}>
+                <option value="en">English</option>
+                <option value="ja">Japanese</option>
+                <option value="ph">Filipino</option>
+              </select>
+            </Typography>
             <Button
               type="submit"
               fullWidth
@@ -164,11 +195,18 @@ const Register = () => {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              <FormattedMessage id="app.signup" defaultMessage="Sign up" />
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/login">{'Already have an account? Sign Ip'}</Link>
+                <Link href="/login">
+                  {
+                    <FormattedMessage
+                      id="app.toSignIn"
+                      defaultMessage="Already have an account? Sign In"
+                    />
+                  }
+                </Link>
               </Grid>
             </Grid>
           </form>

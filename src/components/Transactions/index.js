@@ -13,6 +13,7 @@ import {
   Paper,
   Typography
 } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles({
   headings: {
@@ -72,10 +73,30 @@ const Transactions = ({}) => {
             <TableHead>
               <TableRow>
                 <StyledTableCell align="left">id</StyledTableCell>
-                <StyledTableCell align="left">Quantity</StyledTableCell>
-                <StyledTableCell align="left">Username</StyledTableCell>
-                <StyledTableCell align="left">CreatedAt</StyledTableCell>
-                <StyledTableCell align="left">Purchase Price</StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage
+                    id="app.quantity"
+                    defaultMessage="Quantity"
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage
+                    id="app.username"
+                    defaultMessage="Username"
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage
+                    id="app.createdAt"
+                    defaultMessage="CreatedAt"
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  <FormattedMessage
+                    id="app.purchasePrice"
+                    defaultMessage="Purchase Price"
+                  />
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

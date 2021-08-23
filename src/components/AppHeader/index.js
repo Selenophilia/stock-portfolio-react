@@ -16,6 +16,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import AppPurchaseModal from '../AppPurchaseModal';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -96,7 +97,10 @@ const AppHeader = () => {
           <Typography variant="h5" className={classes.title}>
             <Box component="div" className={classes.user}>
               <BeachAccessIcon className={classes.icon} />
-              IEX Stock Application
+              <FormattedMessage
+                id="app.title"
+                defaultMessage="IEX Stock Portfolio"
+              />
             </Box>
           </Typography>
           <AppPurchaseModal />

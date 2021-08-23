@@ -7,4 +7,10 @@
       margin-top: 40px;
     }
   }
+  & > .language {
+    display: flex;
+    justify-content: flex-end;
+    top: -100px;
+    position: relative;
+  }
 }

@@ -14,6 +14,7 @@ import {
   TableRow,
   Paper
 } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles({
   headings: {
@@ -67,11 +68,12 @@ const Portfolio = ({}) => {
     <div className="portfolio">
       <Box component="div" className={classes.headings}>
         <Typography variant="h5" className={classes.text}>
-          Your Portfolio
+          <FormattedMessage id="app.header" defaultMessage="Your Portfolio" />
         </Typography>
         {user.data && (
           <Typography variant="h5" className={classes.text}>
-            {`Balance: $${parseFloat(user.data.getUser.balance).toFixed(2)}`}
+            {<FormattedMessage id="app.balance" defaultMessage="Balance: " />}
+            {`$${parseFloat(user.data.getUser.balance).toFixed(2)}`}
           </Typography>
         )}
       </Box>
@@ -85,11 +87,36 @@ const Portfolio = ({}) => {
           >
             <TableHead>
               <TableRow>
-                <StyledTableCell align="center">Ticker Symbol</StyledTableCell>
-                <StyledTableCell align="center">Change</StyledTableCell>
-                <StyledTableCell align="center">Quantity</StyledTableCell>
-                <StyledTableCell align="center">Price</StyledTableCell>
-                <StyledTableCell align="center">Total Cost</StyledTableCell>
+                <StyledTableCell align="center">
+                  {
+                    <FormattedMessage
+                      id="app.symbol"
+                      defaultMessage="Ticker Symbol"
+                    />
+                  }
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {<FormattedMessage id="app.change" defaultMessage="Change" />}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {
+                    <FormattedMessage
+                      id="app.quantity"
+                      defaultMessage="Quantity"
+                    />
+                  }
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {<FormattedMessage id="app.price" defaultMessage="Price" />}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {
+                    <FormattedMessage
+                      id="app.totalCost"
+                      defaultMessage="Total Cost"
+                    />
+                  }
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

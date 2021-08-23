@@ -12,6 +12,7 @@ import {
   ApolloClient
 } from '@apollo/client';
 import { AuthProvider } from './contexts/AuthContext';
+import LangContext from './contexts/LangContext';
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000'
 });
@@ -34,10 +35,12 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <AuthProvider>
-        <CssBaseline />
-        <App />
-      </AuthProvider>
+      <LangContext>
+        <AuthProvider>
+          <CssBaseline />
+          <App />
+        </AuthProvider>
+      </LangContext>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

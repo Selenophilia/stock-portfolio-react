@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -14,6 +13,7 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import { fetchQuote } from '../../api';
 import { useMutation } from '@apollo/client';
 import { purchase } from '../../api/mutation';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -144,7 +144,7 @@ export const AppPurchaseModal = () => {
         onClick={handleOpen}
         disableElevation
       >
-        Buy
+        <FormattedMessage id="app.buy" defaultMessage="Buy" />
       </Button>
       <Modal
         open={open}
@@ -154,7 +154,10 @@ export const AppPurchaseModal = () => {
       >
         <div className={classes.paper}>
           <Typography variant="h5" component="h2" className={classes.title}>
-            Buy a stock
+            <FormattedMessage
+              id="app.modalHeader"
+              defaultMessage="Buy a stock"
+            />
           </Typography>
           <Avatar className={classes.avatar}>
             <PaymentIcon fontSize="large" />
@@ -171,14 +174,24 @@ export const AppPurchaseModal = () => {
             <div className="form-group">
               <TextField
                 id="outlined-basic"
-                label="Ticker Symbol"
+                label={
+                  <FormattedMessage
+                    id="app.symbol"
+                    defaultMessage="Ticker Symbol"
+                  />
+                }
                 className={classes.field}
                 variant="outlined"
                 inputRef={symbolRef}
               />
               <TextField
                 id="outlined-basic"
-                label="Quantity"
+                label={
+                  <FormattedMessage
+                    id="app.quantity"
+                    defaultMessage="Quantity"
+                  />
+                }
                 className={classes.field}
                 variant="outlined"
                 inputRef={quantiyRef}
@@ -187,10 +200,10 @@ export const AppPurchaseModal = () => {
             </div>
             <Box component="div" className={classes.buttons}>
               <Button className={classes.cancel} onClick={handleClose}>
-                Cancel
+                <FormattedMessage id="app.cancel" defaultMessage="Cancel" />
               </Button>
               <Button className={classes.confirm} type="submit">
-                Confirm
+                <FormattedMessage id="app.confirm" defaultMessage="Confirm" />
               </Button>
             </Box>
           </form>
