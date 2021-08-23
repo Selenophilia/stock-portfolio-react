@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -10,7 +11,7 @@ import {
   TextField
 } from '@material-ui/core';
 import PaymentIcon from '@material-ui/icons/Payment';
-import { fetchSymbols, fetchQuote } from '../../api';
+import { fetchQuote } from '../../api';
 import { useMutation } from '@apollo/client';
 import { purchase } from '../../api/mutation';
 
@@ -85,42 +86,19 @@ const useStyles = makeStyles((theme) => ({
 export const AppPurchaseModal = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [symbols, setSymbols] = useState(null);
   const [errMsg, setErrMsg] = useState(null);
   const symbolRef = useRef();
   const quantiyRef = useRef();
 
   const [purchaseFunc] = useMutation(purchase, {
-    onCompleted: (data) => {
-      console.log('purrchase', data);
+    onError: (error) => {
+      console.log(error);
+    },
+    onCompleted: () => {
+      console.log('purchase completed');
     }
   });
 
-  const fetch = async () => {
-    const data = await fetchSymbols();
-    return data;
-  };
-
-  const validateData = (input) => {
-    const results = symbols
-      .map((data) => {
-        return data.symbol;
-      })
-      .find((values) => {
-        if (values === input) {
-          return values;
-        } else {
-          setErrMsg('Please include a valid symbol');
-        }
-      });
-
-    return results;
-  };
-  useEffect(() => {
-    fetch().then((symbol) => {
-      setSymbols(symbol);
-    });
-  }, []);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -133,20 +111,25 @@ export const AppPurchaseModal = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const validSymbol = validateData(symbolRef.current.value);
-      if (validSymbol) {
-        const { latestPrice, iexOpen } = await fetchQuote(validSymbol);
-        const total = quantiyRef.current.value * latestPrice;
+      if (symbolRef.current.value && quantiyRef.current.value) {
+        const { latestPrice, iexOpen, change } = await fetchQuote(
+          symbolRef.current.value
+        );
+        const total = parseFloat(quantiyRef.current.value) * latestPrice;
+
         purchaseFunc({
           variables: {
             symbol: symbolRef.current.value,
             price: latestPrice,
+            change: change,
             openPrice: iexOpen,
-            purchasePrice: total,
+            purchasePrice: parseFloat(total),
             purchaseQuantity: Number(quantiyRef.current.value)
           }
         });
         handleClose();
+      } else {
+        setErrMsg('Please include a valid quantity symbol');
       }
     } catch (err) {
       console.log('err', err);

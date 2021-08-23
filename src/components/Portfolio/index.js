@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import BigNumber from 'bignumber.js';
 import { useQuery } from '@apollo/client';
@@ -59,10 +58,11 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const Portfolio = ({}) => {
-  const { data = {} } = useQuery(stocks, { fetchPolicy: 'cache-and-network' });
   const user = useQuery(getUser, { fetchPolicy: 'cache-and-network' });
+  const { data = {} } = useQuery(stocks, { fetchPolicy: 'network-only' });
 
   const classes = useStyles();
+
   return (
     <div className="portfolio">
       <Box component="div" className={classes.headings}>
@@ -71,7 +71,7 @@ const Portfolio = ({}) => {
         </Typography>
         {user.data && (
           <Typography variant="h5" className={classes.text}>
-            {`Balance: $${BigNumber(user.data.getUser.balance).toFormat(2)}`}
+            {`Balance: $${parseFloat(user.data.getUser.balance).toFixed(2)}`}
           </Typography>
         )}
       </Box>
@@ -95,7 +95,7 @@ const Portfolio = ({}) => {
             <TableBody>
               {data.getStocks.map((stocks) => {
                 const price = BigNumber(stocks.price);
-                const openPrice = BigNumber(stocks.openPrice);
+                const total = price.c * stocks.quantity;
                 return (
                   <StyledTableRow key={stocks.id}>
                     <StyledTableCell align="center">
@@ -115,7 +115,7 @@ const Portfolio = ({}) => {
                       align="center"
                       style={{ color: '#b54928' }}
                     >
-                      {`$${openPrice}`}
+                      {`$${total}`}
                     </StyledTableCell>
                   </StyledTableRow>
                 );
@@ -128,10 +128,6 @@ const Portfolio = ({}) => {
       )}
     </div>
   );
-};
-
-Portfolio.propTypes = {
-  rows: PropTypes.array.isRequired
 };
 
 export default Portfolio;

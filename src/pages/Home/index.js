@@ -55,18 +55,6 @@ const Home = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
-  function createData(symbol, change, quantity, price, cost) {
-    return { symbol, change, quantity, price, cost };
-  }
-
-  const rows = [
-    createData('AAPL', '-0.24%', '1 share', '150.99', '25.00'),
-    createData('MSFT', '-0.24%', '1 share', '150.99', '25.00'),
-    createData('GOOG', '-0.24%', '1 share', '150.99', '25.00'),
-    createData('AAPL', '-0.24%', '1 share', '150.99', '25.00'),
-    createData('AAPL', '-0.24%', '1 share', '150.99', '25.00')
-  ];
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -104,7 +92,7 @@ const Home = () => {
             />
           </Tabs>
           <TabPanel value={value} index={0} className={classes.tabpanels}>
-            <Portfolio rows={rows} />
+            <Portfolio />
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabpanels}>
             <Transactions />
