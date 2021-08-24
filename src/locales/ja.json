@@ -27,5 +27,6 @@
   "app.noStock": "まだ在庫はありません!",
   "app.cancel": "キャンセル",
   "app.confirm": "確認",
-  "app.modalHeader": "株を買う"
+  "app.modalHeader": "株を買う",
+  "app.welcome": "こんにちは"
 }

@@ -6,12 +6,17 @@ import { register } from '../../api/mutation';
 
 import {
   Avatar,
+  Box,
   TextField,
   Link,
   Paper,
   Typography,
   Button,
-  Grid
+  Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl
 } from '@material-ui/core';
 import Alert from '../../components/Errorhandler';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
@@ -55,6 +60,17 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
     backgroundColor: '#1467af',
     color: '#fff'
+  },
+  select: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  selectLabel: {
+    marginRight: 5
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
   }
 }));
 
@@ -127,6 +143,7 @@ const Register = () => {
               className={classes.alert}
               message={message}
               clearMessage={clearMessage}
+              severity="error"
             />
           ) : (
             ''
@@ -180,14 +197,26 @@ const Register = () => {
               autoComplete="current-password"
               inputRef={passwordRef}
             />
-            <Typography component="h5" variant="h5">
-              Language:
-              <select value={context.locale} onChange={handleLanguage}>
-                <option value="en">English</option>
-                <option value="ja">Japanese</option>
-                <option value="ph">Filipino</option>
-              </select>
-            </Typography>
+            <Box component="div" className={classes.select}>
+              <FormControl className={classes.formControl}>
+                <InputLabel
+                  id="demo-simple-select-label"
+                  className={classes.selectLabel}
+                >
+                  Language:
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={context.locale}
+                  onChange={handleLanguage}
+                >
+                  <MenuItem value="en">English</MenuItem>
+                  <MenuItem value="ja">Japanese</MenuItem>
+                  <MenuItem value="ph">Filipino</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
             <Button
               type="submit"
               fullWidth

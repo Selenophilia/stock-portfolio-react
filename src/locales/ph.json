@@ -27,5 +27,6 @@
   "app.noStock": "Wala pang stock!",
   "app.cancel": "kanselahin",
   "app.confirm": "Kumpirmahin",
-  "app.modalHeader": "Bumili ng stock"
+  "app.modalHeader": "Bumili ng stock",
+  "app.welcome": "Kamusta"
 }

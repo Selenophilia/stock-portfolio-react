@@ -27,5 +27,6 @@
   "app.noStock": "No stocks yet!",
   "app.cancel": "Cancel",
   "app.confirm": "Confirm",
-  "app.modalHeader": "Buy a stock"
+  "app.modalHeader": "Buy a stock",
+  "app.welcome": "Hello"
 }

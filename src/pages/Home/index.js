@@ -3,8 +3,15 @@ import { FormattedMessage } from 'react-intl';
 import { LanguageContext } from '../../contexts/LangContext';
 import AppHeader from '../../components/AppHeader';
 import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import {
+  Tab,
+  Tabs,
+  Box,
+  Select,
+  InputLabel,
+  MenuItem
+} from '@material-ui/core';
+import Alert from '../../components/Errorhandler';
 import TabPanel from '../../components/TabPanel';
 import Portfolio from '../../components/Portfolio';
 import Transactions from '../../components/Transactions';
@@ -50,6 +57,16 @@ const useStyles = makeStyles((theme) => ({
       outline: 'none',
       borderRadius: '20px '
     }
+  },
+  select: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    top: -100,
+    position: 'relative'
+  },
+  selectLabel: {
+    marginRight: 5
   }
 }));
 
@@ -58,8 +75,9 @@ const Home = () => {
   const [value, setValue] = useState(0);
   const user = localStorage.getItem('user');
   const context = useContext(LanguageContext);
-  const [language, setLanguage] = useState(null);
-
+  const [language, setLanguage] = useState(context.locale);
+  const [message, setMessage] = useState('');
+  const { username } = JSON.parse(user);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -69,14 +87,28 @@ const Home = () => {
     setLanguage(e.target.value);
   };
 
+  const clearMessage = () => {
+    setMessage('');
+  };
+
   useEffect(() => {
-    const { username } = JSON.parse(user);
-    console.log(username);
+    setMessage(`Welcome: ${username}!!`);
   }, []);
 
   return (
     <div className="stock-container">
       <AppHeader />
+      {message ? (
+        <Alert
+          className={classes.alert}
+          message={message}
+          username={username}
+          clearMessage={clearMessage}
+          severity="success"
+        />
+      ) : (
+        ''
+      )}
       <div className="stock-content">
         <div className={classes.root}>
           <Tabs
@@ -131,13 +163,24 @@ const Home = () => {
           </TabPanel>
         </div>
       </div>
-      <div className="language">
-        <select value={context.locale} onChange={handleLanguage}>
-          <option value="en">English</option>
-          <option value="ja">Japanese</option>
-          <option value="ph">Filipino</option>
-        </select>
-      </div>
+      <Box component="div" className={classes.select}>
+        <InputLabel
+          id="demo-simple-select-label"
+          className={classes.selectLabel}
+        >
+          Language:
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={language}
+          onChange={handleLanguage}
+        >
+          <MenuItem value="en">English</MenuItem>
+          <MenuItem value="ja">Japanese</MenuItem>
+          <MenuItem value="ph">Filipino</MenuItem>
+        </Select>
+      </Box>
     </div>
   );
 };

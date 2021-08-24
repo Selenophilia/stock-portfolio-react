@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import MuiAlert from '@material-ui/lab/Alert';
 import { Collapse, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Proptypes from 'prop-types';
-const Alert = ({ message, clearMessage }) => {
+
+const Alert = ({ message, clearMessage, username, ...props }) => {
   const [open, setOpen] = useState(true);
   return (
     <Collapse in={open}>
@@ -21,11 +23,22 @@ const Alert = ({ message, clearMessage }) => {
             <CloseIcon fontSize="inherit" />
           </IconButton>
         }
-        severity="error"
         elevation={6}
         variant="filled"
+        {...props}
       >
-        {message}
+        {console.log(username)}
+        {message.includes('Welcome') || username ? (
+          <FormattedMessage
+            id="app.welcome"
+            defaultMessage="Hello, {name}"
+            values={{
+              name: `${username}`
+            }}
+          />
+        ) : (
+          message
+        )}
       </MuiAlert>
     </Collapse>
   );
@@ -33,7 +46,8 @@ const Alert = ({ message, clearMessage }) => {
 
 Alert.propTypes = {
   clearMessage: Proptypes.func.isRequired,
-  message: Proptypes.string.isRequired
+  message: Proptypes.string.isRequired,
+  username: Proptypes.string.isRequired
 };
 
 export default Alert;

@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#1467af'
   },
   alert: {
-    width: '40%',
+    width: '100%',
     '& > * + *': {
       marginTop: theme.spacing(2)
     }
@@ -110,6 +110,7 @@ const Login = () => {
               className={classes.alert}
               message={message}
               clearMessage={clearMessage}
+              severity="error"
             />
           ) : (
             ''
