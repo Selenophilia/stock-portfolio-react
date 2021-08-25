@@ -72,7 +72,7 @@ const Portfolio = ({}) => {
   });
 
   useEffect(() => {
-    startPolling(5000);
+    startPolling(2000);
     return () => {
       stopPolling();
     };
