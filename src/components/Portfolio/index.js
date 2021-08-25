@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import BigNumber from 'bignumber.js';
 import { useQuery } from '@apollo/client';
@@ -14,7 +14,7 @@ import {
   TableRow,
   Paper
 } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 
 const useStyles = makeStyles({
   headings: {
@@ -59,8 +59,24 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const Portfolio = ({}) => {
-  const user = useQuery(getUser, { fetchPolicy: 'cache-and-network' });
-  const { data = {} } = useQuery(stocks, { fetchPolicy: 'network-only' });
+  const user = useQuery(getUser, {
+    fetchPolicy: 'network-only',
+    pollInterval: 5
+  });
+  const {
+    data = {},
+    startPolling,
+    stopPolling
+  } = useQuery(stocks, {
+    fetchPolicy: 'network-only'
+  });
+
+  useEffect(() => {
+    startPolling(5000);
+    return () => {
+      stopPolling();
+    };
+  }, [startPolling, stopPolling]);
 
   const classes = useStyles();
 
@@ -73,7 +89,13 @@ const Portfolio = ({}) => {
         {user.data && (
           <Typography variant="h5" className={classes.text}>
             {<FormattedMessage id="app.balance" defaultMessage="Balance: " />}
-            {`$${parseFloat(user.data.getUser.balance).toFixed(2)}`}
+            {
+              <FormattedNumber
+                value={user.data.getUser.balance}
+                style="currency"
+                currency="USD"
+              />
+            }
           </Typography>
         )}
       </Box>
@@ -142,7 +164,13 @@ const Portfolio = ({}) => {
                       align="center"
                       style={{ color: '#b54928' }}
                     >
-                      {`$${total}`}
+                      {
+                        <FormattedNumber
+                          value={total}
+                          style="currency"
+                          currency="USD"
+                        />
+                      }
                     </StyledTableCell>
                   </StyledTableRow>
                 );

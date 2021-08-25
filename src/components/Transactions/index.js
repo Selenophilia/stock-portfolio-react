@@ -13,7 +13,7 @@ import {
   Paper,
   Typography
 } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 
 const useStyles = makeStyles({
   headings: {
@@ -115,7 +115,13 @@ const Transactions = ({}) => {
                     </StyledTableCell>
                     <StyledTableCell align="left">{str[0]}</StyledTableCell>
                     <StyledTableCell align="left">
-                      {`$${BigNumber(transaction.purchasePrice).c}`}
+                      {
+                        <FormattedNumber
+                          value={transaction.purchasePrice}
+                          style="currency"
+                          currency="USD"
+                        />
+                      }
                     </StyledTableCell>
                   </StyledTableRow>
                 );

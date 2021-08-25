@@ -9,13 +9,15 @@ import {
   Box,
   Select,
   InputLabel,
-  MenuItem
+  MenuItem,
+  Snackbar
 } from '@material-ui/core';
 import Alert from '../../components/Errorhandler';
 import TabPanel from '../../components/TabPanel';
 import Portfolio from '../../components/Portfolio';
 import Transactions from '../../components/Transactions';
 import MarketSummary from '../../components/MarketSummary';
+import LanguageIcon from '@material-ui/icons/Language';
 import './index.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
   },
   selectLabel: {
     marginRight: 5
+  },
+  alert: {
+    width: '500px',
+    marginTop: 50
   }
 }));
 
@@ -78,6 +84,7 @@ const Home = () => {
   const [language, setLanguage] = useState(context.locale);
   const [message, setMessage] = useState('');
   const { username } = JSON.parse(user);
+  const [open, setOpen] = useState(true);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -99,13 +106,20 @@ const Home = () => {
     <div className="stock-container">
       <AppHeader />
       {message ? (
-        <Alert
-          className={classes.alert}
-          message={message}
-          username={username}
-          clearMessage={clearMessage}
-          severity="success"
-        />
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={open}
+          autoHideDuration={3000}
+          onClose={() => setOpen(false)}
+        >
+          <Alert
+            className={classes.alert}
+            message={message}
+            username={username}
+            clearMessage={clearMessage}
+            severity="success"
+          />
+        </Snackbar>
       ) : (
         ''
       )}
@@ -168,12 +182,12 @@ const Home = () => {
           id="demo-simple-select-label"
           className={classes.selectLabel}
         >
-          Language:
+          <LanguageIcon />
         </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={language}
+          value={language || context.locale}
           onChange={handleLanguage}
         >
           <MenuItem value="en">English</MenuItem>
