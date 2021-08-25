@@ -7,24 +7,22 @@ import English from '../locales/en_US.json';
 
 export const LanguageContext = createContext();
 
-const local = navigator.language;
-
-let lang;
-switch (local) {
-  case 'ph':
-    lang = Filipino;
-    break;
-  case 'ja':
-    lang = Japan;
-    break;
-  default:
-    lang = English;
-}
-
 const LanguageProvider = ({ children }) => {
+  let lang;
+  const local = navigator.language;
   const [locale, setLocale] = useState(local);
-
   const [messages, setMessages] = useState(lang);
+
+  switch (local) {
+    case 'ph':
+      lang = Filipino;
+      break;
+    case 'ja':
+      lang = Japan;
+      break;
+    default:
+      lang = English;
+  }
 
   const selectLanguage = (language) => {
     const newLocale = language;

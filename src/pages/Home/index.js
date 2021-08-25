@@ -100,6 +100,8 @@ const Home = () => {
 
   useEffect(() => {
     setMessage(`Welcome: ${username}!!`);
+    console.log('locale', context.locale);
+    setLanguage(context.locale);
   }, []);
 
   return (
@@ -187,7 +189,7 @@ const Home = () => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={language || context.locale}
+          value={language}
           onChange={handleLanguage}
         >
           <MenuItem value="en">English</MenuItem>
