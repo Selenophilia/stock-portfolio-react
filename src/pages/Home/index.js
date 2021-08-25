@@ -100,7 +100,6 @@ const Home = () => {
 
   useEffect(() => {
     setMessage(`Welcome: ${username}!!`);
-    console.log('locale', context.locale);
     setLanguage(context.locale);
   }, []);
 
