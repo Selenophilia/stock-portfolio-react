@@ -7,6 +7,7 @@ import './app.scss';
 function App() {
   return (
     <Router>
+      
       <Routes />
     </Router>
   );
