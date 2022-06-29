@@ -19,6 +19,7 @@ const Routes = () => {
         path={URL_HELPERS.register}
         exact
       />
+      
       <AuthenticatedRoute
         component={home}
         layout={CustomLayout}
